@@ -1,28 +1,16 @@
 /* ==========================================================================
-   dietrichschmidt.com — Interactive Scope Filter, Form Submission & Obfuscation
-   Zero external dependencies · Cloudflare Pages + Pages Functions (/api/inquiry)
+   dietrichschmidt.com — Interactive Scope Filter & Form Submission (/api/inquiry)
+   Zero email addresses in client code · Zero external dependencies
    ========================================================================== */
 
 (() => {
   'use strict';
-
-  // Obfuscated recipient parts (assembled strictly on explicit human click)
-  const _u = [108, 113, 105, 114];
-  const _d = [
-    103, 108, 104, 119, 117, 108, 102, 107, 118, 102, 107, 112, 108, 103, 119,
-    49, 102, 114, 112,
-  ];
-  function decodeAddress() {
-    const decode = (arr) => arr.map((n) => String.fromCharCode(n - 3)).join('');
-    return `${decode(_u)}${String.fromCharCode(64)}${decode(_d)}`;
-  }
 
   // Track page load time for lightweight anti-bot timing check
   const pageLoadedAt = Date.now();
 
   // State: Map of prioritized audit items (id -> title)
   const prioritizedItems = new Map();
-  let lastBrief = { subject: '', text: '' };
 
   // DOM References
   const menuToggle = document.getElementById('menu-toggle');
@@ -32,8 +20,6 @@
   const shortlistCounter = document.getElementById('shortlist-counter');
   const focusChipsContainer = document.getElementById('selected-focus-chips');
   const clearFocusBtn = document.getElementById('clear-focus-btn');
-  const revealEmailBtn = document.getElementById('reveal-email-btn');
-  const revealedEmailSlot = document.getElementById('revealed-email-slot');
   const inquiryForm = document.getElementById('audit-inquiry-form');
   const submitBtn = document.getElementById('submit-inquiry-btn');
   const formError = document.getElementById('form-error');
@@ -41,7 +27,6 @@
   const briefOutput = document.getElementById('brief-output');
   const briefNote = document.getElementById('brief-note');
   const briefPreview = document.getElementById('brief-preview');
-  const openEmailBtn = document.getElementById('open-email-btn');
   const copyBtn = document.getElementById('copy-brief-btn');
   const copyFeedback = document.getElementById('copy-feedback');
 
@@ -65,21 +50,7 @@
   }
 
   // --------------------------------------------------------------------------
-  // 2. Click-to-Reveal Obfuscated Email (Never present in static HTML)
-  // --------------------------------------------------------------------------
-  if (revealEmailBtn && revealedEmailSlot) {
-    revealEmailBtn.addEventListener('click', () => {
-      const addr = decodeAddress();
-      const link = document.createElement('a');
-      link.href = `mailto:${addr}`;
-      link.textContent = addr;
-      revealedEmailSlot.innerHTML = '';
-      revealedEmailSlot.appendChild(link);
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // 3. Domain Filter Tabs for 10-Point Audit
+  // 2. Domain Filter Tabs for 10-Point Audit
   // --------------------------------------------------------------------------
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -97,7 +68,7 @@
   });
 
   // --------------------------------------------------------------------------
-  // 4. Audit Priority Shortlist (Synced with Inquiry Panel)
+  // 3. Audit Priority Shortlist (Synced with Inquiry Panel)
   // --------------------------------------------------------------------------
   function syncShortlistUI() {
     const count = prioritizedItems.size;
@@ -188,7 +159,7 @@
   }
 
   // --------------------------------------------------------------------------
-  // 5. Native Form Submission (/api/inquiry) with Obfuscated Fallback
+  // 4. Native Form Submission (POST /api/inquiry — Zero Client Email Exposure)
   // --------------------------------------------------------------------------
   function getPrioritizedList() {
     return Array.from(prioritizedItems.entries())
@@ -276,8 +247,6 @@
       };
 
       const briefText = buildBriefText(payload);
-      const subject = `Q1 2027 Technical Audit Inquiry${organization ? ` — ${organization}` : ''}`;
-      lastBrief = { subject, text: briefText };
 
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -302,10 +271,9 @@
           return;
         }
 
-        // Graceful fallback if direct backend delivery is not yet configured
         if (briefNote) {
           briefNote.textContent =
-            'Direct form delivery is being finalized—copy your structured brief below or launch your email client directly:';
+            'Direct form delivery is temporarily unavailable—copy your brief below and send it via LinkedIn:';
         }
         if (briefPreview) {
           briefPreview.textContent = briefText;
@@ -317,7 +285,7 @@
       } catch {
         if (briefNote) {
           briefNote.textContent =
-            'Could not reach the submission endpoint—copy your structured brief below or launch your email client directly:';
+            'Could not reach the submission endpoint—copy your brief below and send it via LinkedIn:';
         }
         if (briefPreview) {
           briefPreview.textContent = briefText;
@@ -338,17 +306,6 @@
       if (formError) formError.classList.remove('is-visible');
       if (briefOutput) briefOutput.classList.remove('is-visible');
       if (copyFeedback) copyFeedback.textContent = '';
-    });
-  }
-
-  // Construct mailto URI strictly on user click (never written into static DOM)
-  if (openEmailBtn) {
-    openEmailBtn.addEventListener('click', () => {
-      if (!lastBrief.text) return;
-      const addr = decodeAddress();
-      window.location.href = `mailto:${addr}?subject=${encodeURIComponent(
-        lastBrief.subject
-      )}&body=${encodeURIComponent(lastBrief.text)}`;
     });
   }
 
@@ -375,7 +332,7 @@
   }
 
   // --------------------------------------------------------------------------
-  // 6. Subtle Progressive Reveal on Scroll
+  // 5. Subtle Progressive Reveal on Scroll
   // --------------------------------------------------------------------------
   const revealNodes = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && revealNodes.length > 0) {

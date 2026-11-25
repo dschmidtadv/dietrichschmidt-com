@@ -14,10 +14,10 @@ Built with zero build steps, zero third-party trackers, and native **Cloudflare 
 - `_headers` — Cloudflare Pages HTTP security headers (HSTS, CSP, `X-Frame-Options`, caching rules).
 - `robots.txt` & `sitemap.xml` — Search indexing configuration for `https://dietrichschmidt.com/`.
 
-## Contact Form & Email Obfuscation
+## Contact Form & Zero Email Exposure
 
-- **No plaintext email** appears in `index.html`, JSON-LD, or `script.js`.
-- Visitors submit inquiries directly through the web form (`POST /api/inquiry` via [`functions/api/inquiry.js`](functions/api/inquiry.js)), with a click-to-reveal obfuscated fallback.
+- **No email address** (neither plaintext nor encoded `mailto:`) exists anywhere in `index.html`, JSON-LD, or `script.js`.
+- Visitors submit inquiries strictly through the web form (`POST /api/inquiry` via [`functions/api/inquiry.js`](functions/api/inquiry.js)), with a Copy Brief + LinkedIn fallback if server-side delivery secrets are not yet set.
 - **LinkedIn**: `https://www.linkedin.com/in/dietrichschmidt/`
 
 ### Enable Direct Server-Side Form Delivery (Cloudflare Pages)

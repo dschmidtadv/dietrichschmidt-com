@@ -1149,23 +1149,6 @@ code {
   pointer-events: none;
 }
 
-.reveal-email-btn {
-  background: transparent;
-  border: 1px solid hsla(40, 28%, 95%, 0.28);
-  border-radius: var(--radius-sm);
-  padding: 5px 11px;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--ink-on-dark);
-  cursor: pointer;
-  transition: border-color 0.18s var(--ease-out), background-color 0.18s var(--ease-out);
-}
-
-.reveal-email-btn:hover {
-  border-color: var(--ink-on-dark);
-  background: hsla(40, 28%, 95%, 0.08);
-}
-
 .form-success {
   margin-top: 22px;
   padding: 18px 20px;

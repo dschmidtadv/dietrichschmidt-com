@@ -611,11 +611,7 @@
               </li>
               <li>
                 <span class="direct-label">Direct Contact</span>
-                <span class="direct-value" id="revealed-email-slot">
-                  <button class="reveal-email-btn" id="reveal-email-btn" type="button">
-                    Reveal email address
-                  </button>
-                </span>
+                <span class="direct-value">Private inquiry form (response within 1 business day)</span>
               </li>
               <li>
                 <span class="direct-label">LinkedIn</span>
@@ -768,20 +764,26 @@
               </p>
             </div>
 
-            <!-- Graceful Fallback Brief Output (no static mailto exposed) -->
+            <!-- Fallback Brief Output (zero email exposed; Copy + LinkedIn only) -->
             <div class="brief-output" id="brief-output" aria-live="polite">
               <div class="brief-output-head">
-                <span class="brief-output-title">Ready-to-Send Technical Inquiry Brief</span>
+                <span class="brief-output-title">Structured Technical Inquiry Brief</span>
               </div>
               <p class="brief-note" id="brief-note"></p>
               <pre class="brief-preview" id="brief-preview"></pre>
               <div class="brief-actions">
-                <button class="btn btn-primary btn-sm" id="open-email-btn" type="button">
-                  Open in Email Client
-                </button>
-                <button class="btn btn-secondary btn-sm" id="copy-brief-btn" type="button">
+                <button class="btn btn-primary btn-sm" id="copy-brief-btn" type="button">
                   Copy Brief
                 </button>
+                <a
+                  class="btn btn-secondary btn-sm"
+                  id="linkedin-brief-btn"
+                  href="https://www.linkedin.com/in/dietrichschmidt/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Send via LinkedIn
+                </a>
                 <span class="copy-feedback" id="copy-feedback" role="status"></span>
               </div>
             </div>
