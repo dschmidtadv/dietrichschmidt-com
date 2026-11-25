@@ -1,4 +1,5 @@
 .DS_Store
 Thumbs.db
 .wrangler/
+dist/
 node_modules/
