@@ -23,16 +23,27 @@ Built with zero build steps, zero third-party trackers, and native **Cloudflare 
 
 Because DNS for `dietrichschmidt.com` is already managed in Cloudflare, **Cloudflare Pages** is the cleanest, zero-maintenance host (global edge CDN, automatic TLS, free static hosting, native `_headers` support):
 
-### Option A — Connect via GitHub (Recommended)
-1. Push this directory to a GitHub repository.
-2. In **Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git**.
-3. Select the repository and set:
+### Option A — Automated Deploy via GitHub Actions (Included)
+The workflow at `.github/workflows/deploy-cloudflare-pages.yml` validates `script.js`, stages only the public web assets into `dist/` (keeping `README.md`, `.github/`, and `.gitignore` out of production), and deploys to Cloudflare Pages on every push to `main` or manual dispatch.
+
+1. In **Cloudflare Dashboard → My Profile → API Tokens → Create Token**, create a token with:
+   - **Account → Cloudflare Pages → Edit**
+2. Copy your **Account ID** from the Cloudflare Dashboard URL or sidebar.
+3. In GitHub (`dschmidtadv/dietrichschmidt-com`) → **Settings → Secrets and variables → Actions → New repository secret**, add:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+   - *(Optional)* Add a repository **variable** `CLOUDFLARE_PROJECT_NAME` if your Pages project is not named `dietrichschmidt-com`.
+4. Ensure the Cloudflare Pages project `dietrichschmidt-com` exists (create it once via Direct Upload or CLI: `npx wrangler pages project create dietrichschmidt-com --production-branch main`), then run the workflow or push to `main`.
+
+### Option B — Native Cloudflare Pages Git Integration
+1. In **Cloudflare Dashboard → Workers & Pages → Create → Pages → Connect to Git**.
+2. Select `dschmidtadv/dietrichschmidt-com` and set:
    - **Framework preset**: `None`
    - **Build command**: *(leave empty)*
    - **Build output directory**: `.`
-4. Click **Save and Deploy**.
+3. Click **Save and Deploy**.
 
-### Option B — Direct CLI Deploy via Wrangler
+### Option C — Direct CLI Deploy via Wrangler
 ```bash
 npx wrangler pages deploy . --project-name dietrichschmidt-com
 ```
