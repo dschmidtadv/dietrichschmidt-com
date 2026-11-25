@@ -1140,6 +1140,68 @@ code {
   display: block;
 }
 
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.reveal-email-btn {
+  background: transparent;
+  border: 1px solid hsla(40, 28%, 95%, 0.28);
+  border-radius: var(--radius-sm);
+  padding: 5px 11px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-on-dark);
+  cursor: pointer;
+  transition: border-color 0.18s var(--ease-out), background-color 0.18s var(--ease-out);
+}
+
+.reveal-email-btn:hover {
+  border-color: var(--ink-on-dark);
+  background: hsla(40, 28%, 95%, 0.08);
+}
+
+.form-success {
+  margin-top: 22px;
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-teal-soft);
+  border: 1px solid var(--accent-teal);
+  color: var(--ink-primary);
+  display: none;
+}
+
+.form-success.is-visible {
+  display: block;
+}
+
+.form-success-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-teal);
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.form-success p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+}
+
+.brief-note {
+  margin: 0 0 12px;
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+}
+
 /* Generated Brief Output */
 .brief-output {
   margin-top: 24px;

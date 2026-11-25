@@ -14,10 +14,20 @@ Built with zero build steps, zero third-party trackers, and native **Cloudflare 
 - `_headers` — Cloudflare Pages HTTP security headers (HSTS, CSP, `X-Frame-Options`, caching rules).
 - `robots.txt` & `sitemap.xml` — Search indexing configuration for `https://dietrichschmidt.com/`.
 
-## Configured Contact Links
+## Contact Form & Email Obfuscation
 
-- **Email**: `info@dietrichschmidt.com` (wired into both `index.html` and the brief generator in `script.js`)
-- **LinkedIn**: `https://www.linkedin.com/in/dietrichschmidt/` (included in JSON-LD `sameAs`, the contact panel, and footer)
+- **No plaintext email** appears in `index.html`, JSON-LD, or `script.js`.
+- Visitors submit inquiries directly through the web form (`POST /api/inquiry` via [`functions/api/inquiry.js`](functions/api/inquiry.js)), with a click-to-reveal obfuscated fallback.
+- **LinkedIn**: `https://www.linkedin.com/in/dietrichschmidt/`
+
+### Enable Direct Server-Side Form Delivery (Cloudflare Pages)
+In **Cloudflare Dashboard → Workers & Pages → `dietrichschmidt-com` → Settings → Variables and Secrets**, add:
+- **Via Resend (recommended):**
+  - `CONTACT_TO_EMAIL` — destination inbox (stored only as a Cloudflare secret/var, never in Git)
+  - `RESEND_API_KEY` — Resend API key (encrypted secret)
+  - `CONTACT_FROM_EMAIL` *(optional)* — verified sender address (defaults to `inquiries@dietrichschmidt.com`)
+- **Or via Webhook (Slack / n8n / Make / Formspree):**
+  - `INQUIRY_WEBHOOK_URL` — webhook endpoint (encrypted secret)
 
 ## Deploying to Cloudflare Pages (with Cloudflare DNS)
 

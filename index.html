@@ -44,8 +44,12 @@
       "@type": "ProfessionalService",
       "name": "Dietrich Gottfried Schmidt — Drupal · AWS · AI Enablement Consulting",
       "url": "https://dietrichschmidt.com/",
-      "email": "mailto:info@dietrichschmidt.com",
       "description": "Independent technical consulting and Q1 2027 10-Point Technical Audit for Drupal platforms, AWS cloud infrastructure, editorial syndication pipelines, and grounded AI workflows.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "consulting inquiries",
+        "url": "https://dietrichschmidt.com/#contact"
+      },
       "founder": {
         "@type": "Person",
         "name": "Dietrich Gottfried Schmidt",
@@ -586,8 +590,8 @@
             </h2>
           </div>
           <p class="section-lead">
-            Configure a concise technical brief below. Any audit items you prioritized above are
-            included automatically—ready to copy or send directly via email with zero third-party trackers.
+            Submit a concise technical brief directly through the form below. Any audit items you
+            prioritized above are included automatically—with zero third-party trackers.
           </p>
         </div>
 
@@ -606,9 +610,11 @@
                 <span class="direct-value">dietrichschmidt.com</span>
               </li>
               <li>
-                <span class="direct-label">Direct Email</span>
-                <span class="direct-value">
-                  <a href="mailto:info@dietrichschmidt.com" id="direct-email-link">info@dietrichschmidt.com</a>
+                <span class="direct-label">Direct Contact</span>
+                <span class="direct-value" id="revealed-email-slot">
+                  <button class="reveal-email-btn" id="reveal-email-btn" type="button">
+                    Reveal email address
+                  </button>
                 </span>
               </li>
               <li>
@@ -650,7 +656,13 @@
               </div>
             </div>
 
-            <form id="audit-inquiry-form" novalidate>
+            <form id="audit-inquiry-form" action="/api/inquiry" method="post" novalidate>
+              <!-- Anti-spam honeypot (hidden from humans) -->
+              <div class="hp-field" aria-hidden="true">
+                <label for="client-website">Leave this field empty</label>
+                <input id="client-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+
               <div class="form-grid">
                 <div class="form-field">
                   <label for="client-name">Your Name</label>
@@ -738,8 +750,8 @@
               <p class="form-error" id="form-error" role="alert"></p>
 
               <div class="form-actions">
-                <button class="btn btn-primary" id="generate-brief-btn" type="submit">
-                  Generate Audit Inquiry Brief
+                <button class="btn btn-primary" id="submit-inquiry-btn" type="submit">
+                  Send Audit Inquiry
                 </button>
                 <button class="btn btn-secondary" id="reset-form-btn" type="reset">
                   Reset
@@ -747,16 +759,26 @@
               </div>
             </form>
 
-            <!-- Structured Brief Output -->
+            <!-- Server-Side Confirmation Banner -->
+            <div class="form-success" id="form-success" role="status" aria-live="polite">
+              <p class="form-success-title">Inquiry Received</p>
+              <p>
+                Thank you—your technical audit brief has been delivered directly. I will follow up
+                within one business day to align on scope and timing.
+              </p>
+            </div>
+
+            <!-- Graceful Fallback Brief Output (no static mailto exposed) -->
             <div class="brief-output" id="brief-output" aria-live="polite">
               <div class="brief-output-head">
                 <span class="brief-output-title">Ready-to-Send Technical Inquiry Brief</span>
               </div>
+              <p class="brief-note" id="brief-note"></p>
               <pre class="brief-preview" id="brief-preview"></pre>
               <div class="brief-actions">
-                <a class="btn btn-primary btn-sm" id="mailto-brief-btn" href="#">
+                <button class="btn btn-primary btn-sm" id="open-email-btn" type="button">
                   Open in Email Client
-                </a>
+                </button>
                 <button class="btn btn-secondary btn-sm" id="copy-brief-btn" type="button">
                   Copy Brief
                 </button>
@@ -784,7 +806,7 @@
           <a href="#audit">10-Point Q1 2027 Audit</a>
           <a href="#practice">Practice Areas</a>
           <a href="#process">How It Runs</a>
-          <a href="mailto:info@dietrichschmidt.com">info@dietrichschmidt.com</a>
+          <a href="#contact">Contact Form</a>
           <a href="https://www.linkedin.com/in/dietrichschmidt/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </nav>
       </div>
