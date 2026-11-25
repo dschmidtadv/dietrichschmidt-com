@@ -938,13 +938,55 @@ code {
 }
 
 .direct-value a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: hsl(174, 54%, 74%);
   text-decoration: underline;
-  text-decoration-color: hsla(40, 28%, 95%, 0.35);
+  text-decoration-color: hsla(174, 54%, 74%, 0.55);
   text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 0.18s var(--ease-out), text-decoration-color 0.18s var(--ease-out);
 }
 
 .direct-value a:hover {
-  text-decoration-color: var(--ink-on-dark);
+  color: hsl(174, 65%, 86%);
+  text-decoration-color: hsl(174, 65%, 86%);
+}
+
+.hero-profiles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin: -16px 0 30px;
+}
+
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent-teal);
+  text-decoration: underline;
+  text-decoration-color: hsla(176, 69%, 22%, 0.4);
+  text-underline-offset: 4px;
+  cursor: pointer;
+  transition: color 0.18s var(--ease-out), text-decoration-color 0.18s var(--ease-out);
+}
+
+.profile-link:hover {
+  color: var(--accent-teal-hover);
+  text-decoration-color: var(--accent-teal-hover);
+}
+
+.profile-link svg,
+.direct-value a svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 /* Form Panel */
@@ -1282,8 +1324,22 @@ code {
   color: var(--ink-secondary);
 }
 
+.footer-links a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: color 0.18s var(--ease-out), text-decoration-color 0.18s var(--ease-out);
+}
+
+.footer-links a[target='_blank'] {
+  color: var(--accent-teal);
+  font-weight: 500;
+  text-decoration-color: hsla(176, 69%, 22%, 0.4);
+}
+
 .footer-links a:hover {
   color: var(--accent-teal);
+  text-decoration-color: var(--accent-teal);
 }
 
 .footer-bottom {
